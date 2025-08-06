@@ -111,7 +111,6 @@
         </main>
     </div>
 </template>
-</template>
 
 <script>
 // Sidebar Content Component - Séparé pour la réutilisation mobile/desktop

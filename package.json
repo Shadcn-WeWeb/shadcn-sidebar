@@ -2,7 +2,7 @@
     "name": "shadcn-sidebar",
     "repository": {
         "type": "git",
-        "url": "https://github.com/SebWell/shadcn-sidebar"
+        "url": "https://github.com/Shadcn-WeWeb/shadcn-sidebar"
     },
     "version": "1.0.0",
     "scripts": {
