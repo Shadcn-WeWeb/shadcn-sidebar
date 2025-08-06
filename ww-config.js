@@ -1,14 +1,78 @@
 export default {
     editor: {
-        label: 'Sidebar Navigation',
+        label: 'Shadcn UI Sidebar',
         icon: 'menu',
+        customStylePropertiesOrder: [
+            'variant',
+            'sidebarWidth', 
+            'sidebarBg',
+            'sidebarForeground',
+            'sidebarPrimary',
+            'sidebarPrimaryForeground',
+            'sidebarAccent',
+            'sidebarAccentForeground',
+            'sidebarBorder',
+            'sidebarRing'
+        ],
+        customSettingsPropertiesOrder: [
+            'showHeader',
+            'title',
+            'subtitle', 
+            'mainTitle',
+            'collapsible',
+            'variant',
+            'side',
+            'defaultOpen',
+            'keyboardShortcut',
+            'showTrigger',
+            'hideContent',
+            'menuItems',
+            'groupLabel',
+            'secondaryItems',
+            'secondaryGroupLabel',
+            'showFooter',
+            'userName',
+            'userEmail',
+            'userAvatar',
+            'userInitials'
+        ]
     },
     triggerEvents: [
-        { name: 'toggle', label: 'On Toggle', event: { collapsed: false }, default: true },
-        { name: 'item-click', label: 'On Item Click', event: { item: {}, index: 0, label: '' } },
+        { 
+            name: 'toggle', 
+            label: 'On Toggle', 
+            event: { 
+                open: true, 
+                openMobile: false, 
+                state: 'expanded', 
+                isMobile: false, 
+                collapsible: 'offcanvas' 
+            }, 
+            default: true 
+        },
+        { 
+            name: 'item-click', 
+            label: 'On Menu Item Click', 
+            event: { 
+                item: {}, 
+                index: 0, 
+                parentIndex: null, 
+                label: '', 
+                hasSubItems: false 
+            } 
+        },
+        { 
+            name: 'secondary-item-click', 
+            label: 'On Secondary Item Click', 
+            event: { 
+                item: {}, 
+                index: 0, 
+                label: '' 
+            } 
+        },
     ],
     properties: {
-        // Header settings
+        // Sidebar Structure - Configuration officielle Shadcn UI
         showHeader: {
             label: { en: "Show header", fr: "Afficher l'en-tête" },
             type: "OnOff",
@@ -17,21 +81,75 @@ export default {
             bindable: true
         },
         title: {
-            label: { en: "Title", fr: "Titre" },
+            label: { en: "Application title", fr: "Titre de l'application" },
             type: "Text",
             section: "settings",
-            defaultValue: "Navigation",
+            defaultValue: "Shadcn UI",
+            bindable: true
+        },
+        subtitle: {
+            label: { en: "Application subtitle", fr: "Sous-titre de l'application" },
+            type: "Text",
+            section: "settings",
+            defaultValue: "Demo App",
+            bindable: true
+        },
+        mainTitle: {
+            label: { en: "Main content title", fr: "Titre du contenu principal" },
+            type: "Text",
+            section: "settings",
+            defaultValue: "Dashboard",
             bindable: true
         },
         collapsible: {
-            label: { en: "Collapsible", fr: "Repliable" },
+            label: { en: "Collapsible mode", fr: "Mode repliable" },
+            type: "TextSelect",
+            options: {
+                choices: [
+                    { label: "Offcanvas (mobile overlay)", value: "offcanvas" },
+                    { label: "Icon (collapse to icons)", value: "icon" },
+                    { label: "None (always visible)", value: "none" }
+                ]
+            },
+            defaultValue: "offcanvas",
+            section: "settings",
+            bindable: true
+        },
+        defaultOpen: {
+            label: { en: "Default open", fr: "Ouvert par défaut" },
             type: "OnOff",
             section: "settings",
             defaultValue: true,
             bindable: true
         },
-        collapsed: {
-            label: { en: "Initially collapsed", fr: "Replié initialement" },
+        side: {
+            label: { en: "Side", fr: "Côté" },
+            type: "TextSelect",
+            options: {
+                choices: [
+                    { label: "Left", value: "left" },
+                    { label: "Right", value: "right" }
+                ]
+            },
+            defaultValue: "left",
+            section: "settings"
+        },
+        keyboardShortcut: {
+            label: { en: "Keyboard shortcut (Cmd+B)", fr: "Raccourci clavier (Cmd+B)" },
+            type: "OnOff",
+            section: "settings",
+            defaultValue: true,
+            bindable: true
+        },
+        showTrigger: {
+            label: { en: "Show header trigger", fr: "Afficher bouton dans l'en-tête" },
+            type: "OnOff",
+            section: "settings",
+            defaultValue: true,
+            bindable: true
+        },
+        hideContent: {
+            label: { en: "Hide main content area", fr: "Masquer la zone de contenu principal" },
             type: "OnOff",
             section: "settings",
             defaultValue: false,
@@ -44,30 +162,25 @@ export default {
             type: "TextSelect",
             options: {
                 choices: [
-                    { label: "Default", value: "default" },
-                    { label: "Secondary", value: "secondary" },
-                    { label: "Outline", value: "outline" }
+                    { label: "Sidebar (default)", value: "sidebar" },
+                    { label: "Floating (rounded with shadow)", value: "floating" },
+                    { label: "Inset (subtle background)", value: "inset" }
                 ]
             },
-            defaultValue: "default",
+            defaultValue: "sidebar",
             section: "style"
         },
-        position: {
-            label: { en: "Position", fr: "Position" },
-            type: "TextSelect",
-            options: {
-                choices: [
-                    { label: "Left", value: "left" },
-                    { label: "Right", value: "right" }
-                ]
-            },
-            defaultValue: "left",
-            section: "style"
+        sidebarWidth: {
+            label: { en: "Sidebar width", fr: "Largeur du sidebar" },
+            type: "Text",
+            section: "style",
+            defaultValue: "16rem",
+            bindable: true
         },
 
-        // Navigation items
-        items: {
-            label: { en: "Navigation items", fr: "Éléments de navigation" },
+        // Navigation Menu
+        menuItems: {
+            label: { en: "Menu items", fr: "Éléments de menu" },
             type: "Array",
             section: "settings",
             options: {
@@ -76,8 +189,18 @@ export default {
                     options: {
                         item: {
                             icon: {
-                                label: { en: "Icon", fr: "Icône" },
-                                type: "Text",
+                                label: { en: "Icon name", fr: "Nom d'icône" },
+                                type: "TextSelect",
+                                options: {
+                                    choices: [
+                                        { label: "Home", value: "home" },
+                                        { label: "Inbox", value: "inbox" },
+                                        { label: "Calendar", value: "calendar" },
+                                        { label: "Search", value: "search" },
+                                        { label: "Settings", value: "settings" },
+                                        { label: "Help Circle", value: "help-circle" }
+                                    ]
+                                },
                                 bindable: true
                             },
                             label: {
@@ -99,22 +222,107 @@ export default {
                                 label: { en: "Disabled", fr: "Désactivé" },
                                 type: "OnOff",
                                 bindable: true
+                            },
+                            subItems: {
+                                label: { en: "Sub items", fr: "Sous-éléments" },
+                                type: "Array",
+                                bindable: true,
+                                options: {
+                                    item: {
+                                        type: "Object",
+                                        options: {
+                                            item: {
+                                                label: {
+                                                    label: { en: "Label", fr: "Libellé" },
+                                                    type: "Text",
+                                                    bindable: true
+                                                },
+                                                active: {
+                                                    label: { en: "Active", fr: "Actif" },
+                                                    type: "OnOff",
+                                                    bindable: true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             },
             defaultValue: [
-                { icon: "🏠", label: "Home", active: true },
-                { icon: "📊", label: "Dashboard", badge: "3" },
-                { icon: "👥", label: "Users" },
-                { icon: "⚙️", label: "Settings" },
-                { icon: "❓", label: "Help" }
+                { icon: "home", label: "Home", active: true },
+                { icon: "inbox", label: "Inbox", badge: "3" },
+                { icon: "calendar", label: "Calendar" },
+                { icon: "search", label: "Search" },
+                { icon: "settings", label: "Settings" }
             ],
             bindable: true
         },
 
-        // Footer settings
+        // Secondary Navigation
+        secondaryItems: {
+            label: { en: "Secondary items", fr: "Éléments secondaires" },
+            type: "Array",
+            section: "settings",
+            options: {
+                item: {
+                    type: "Object",
+                    options: {
+                        item: {
+                            icon: {
+                                label: { en: "Icon name", fr: "Nom d'icône" },
+                                type: "TextSelect",
+                                options: {
+                                    choices: [
+                                        { label: "Home", value: "home" },
+                                        { label: "Inbox", value: "inbox" },
+                                        { label: "Calendar", value: "calendar" },
+                                        { label: "Search", value: "search" },
+                                        { label: "Settings", value: "settings" },
+                                        { label: "Help Circle", value: "help-circle" }
+                                    ]
+                                },
+                                bindable: true
+                            },
+                            label: {
+                                label: { en: "Label", fr: "Libellé" },
+                                type: "Text",
+                                bindable: true
+                            },
+                            disabled: {
+                                label: { en: "Disabled", fr: "Désactivé" },
+                                type: "OnOff",
+                                bindable: true
+                            }
+                        }
+                    }
+                }
+            },
+            defaultValue: [
+                { icon: "help-circle", label: "Help & Support" }
+            ],
+            bindable: true
+        },
+
+        // Group Labels
+        groupLabel: {
+            label: { en: "Main group label", fr: "Label du groupe principal" },
+            type: "Text",
+            section: "settings",
+            defaultValue: "Platform",
+            bindable: true
+        },
+        secondaryGroupLabel: {
+            label: { en: "Secondary group label", fr: "Label groupe secondaire" },
+            type: "Text",
+            section: "settings",
+            defaultValue: "Support",
+            bindable: true
+        },
+
+        // User Footer settings
         showFooter: {
             label: { en: "Show footer", fr: "Afficher le pied" },
             type: "OnOff",
@@ -136,62 +344,76 @@ export default {
             defaultValue: "john@example.com",
             bindable: true
         },
+        userAvatar: {
+            label: { en: "User avatar URL", fr: "URL avatar utilisateur" },
+            type: "Text",
+            section: "settings",
+            defaultValue: "",
+            bindable: true
+        },
         userInitials: {
             label: { en: "User initials", fr: "Initiales utilisateur" },
             type: "Text",
             section: "settings",
-            defaultValue: "JD",
+            defaultValue: "",
             bindable: true
         },
 
-        // Colors
-        primaryColor: {
-            label: { en: "Primary color", fr: "Couleur principale" },
-            type: "Color",
+        // Shadcn UI CSS Variables - Format HSL
+        sidebarBg: {
+            label: { en: "Sidebar background (HSL)", fr: "Arrière-plan sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(222.2, 47.4%, 11.2%)",
+            defaultValue: "0 0% 98%",
             bindable: true
         },
-        primaryForeground: {
-            label: { en: "Primary foreground", fr: "Premier plan principal" },
-            type: "Color", 
+        sidebarForeground: {
+            label: { en: "Sidebar foreground (HSL)", fr: "Texte sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(210, 40%, 98%)",
+            defaultValue: "240 5.3% 26.1%",
             bindable: true
         },
-        secondaryColor: {
-            label: { en: "Secondary color", fr: "Couleur secondaire" },
-            type: "Color",
-            section: "style", 
-            defaultValue: "hsl(210, 40%, 96%)",
+        sidebarPrimary: {
+            label: { en: "Sidebar primary (HSL)", fr: "Couleur principale sidebar (HSL)" },
+            type: "Text",
+            section: "style",
+            defaultValue: "240 5.9% 10%",
             bindable: true
         },
-        secondaryForeground: {
-            label: { en: "Secondary foreground", fr: "Premier plan secondaire" },
-            type: "Color",
+        sidebarPrimaryForeground: {
+            label: { en: "Sidebar primary foreground (HSL)", fr: "Texte principal sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(222.2, 84%, 4.9%)",
+            defaultValue: "0 0% 98%",
             bindable: true
         },
-        borderColor: {
-            label: { en: "Border color", fr: "Couleur de bordure" },
-            type: "Color",
+        sidebarAccent: {
+            label: { en: "Sidebar accent (HSL)", fr: "Accent sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(214.3, 31.8%, 91.4%)",
+            defaultValue: "240 4.8% 95.9%",
             bindable: true
         },
-        accentColor: {
-            label: { en: "Accent color", fr: "Couleur d'accent" },
-            type: "Color",
+        sidebarAccentForeground: {
+            label: { en: "Sidebar accent foreground (HSL)", fr: "Texte accent sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(210, 40%, 96%)",
+            defaultValue: "240 5.9% 10%",
             bindable: true
         },
-        accentForeground: {
-            label: { en: "Accent foreground", fr: "Premier plan accent" },
-            type: "Color",
+        sidebarBorder: {
+            label: { en: "Sidebar border (HSL)", fr: "Bordure sidebar (HSL)" },
+            type: "Text",
             section: "style",
-            defaultValue: "hsl(222.2, 84%, 4.9%)",
+            defaultValue: "220 13% 91%",
+            bindable: true
+        },
+        sidebarRing: {
+            label: { en: "Sidebar ring (HSL)", fr: "Ring sidebar (HSL)" },
+            type: "Text",
+            section: "style",
+            defaultValue: "217.2 91.2% 59.8%",
             bindable: true
         }
     }
