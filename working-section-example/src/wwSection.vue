@@ -1,5 +1,5 @@
 <template>
-    <wwLayout path="wwObjects" class="sidebar-section-base"></wwLayout>
+    <wwLayout path="wwObjects" class="section-base"></wwLayout>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sidebar-section-base {
+.section-base {
     width: 100%;
     height: 100%;
 }

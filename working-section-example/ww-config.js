@@ -5,15 +5,13 @@ export default {
     inherit: [{ type: 'ww-layout' }, { type: 'ww-background-video' }],
     editor: {
         label: {
-            en: 'Sidebar Section',
-            fr: 'Section Sidebar'
+            en: 'Base',
         },
-        icon: 'menu'
     },
     properties: {
         wwObjects: {
             hidden: true,
             defaultValue: [],
         },
-    }
+    },
 };
