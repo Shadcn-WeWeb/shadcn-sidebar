@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "Shadcn UI Sidebar Button component for WeWeb",
     "main": "src/wwElement.vue",
+    "weweb": {
+        "type": "element"
+    },
     "scripts": {
         "build": "weweb build",
         "serve": "weweb serve"

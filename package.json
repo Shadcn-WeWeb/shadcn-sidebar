@@ -5,6 +5,11 @@
         "url": "https://github.com/Shadcn-WeWeb/shadcn-sidebar"
     },
     "version": "1.0.0",
+    "description": "Shadcn UI Sidebar Section for WeWeb",
+    "main": "src/wwElement.vue",
+    "weweb": {
+        "type": "section"
+    },
     "scripts": {
         "build": "weweb build",
         "serve": "weweb serve"

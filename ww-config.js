@@ -1,12 +1,11 @@
 export default {
+    inherit: { type: 'ww-layout', exclude: ['states'] },
     editor: {
         label: {
             en: 'Shadcn UI Sidebar',
             fr: 'Sidebar Shadcn UI'
         },
         icon: 'menu',
-        // Section excludes pour laisser place aux zones de dropzone
-        excludedSections: ["spacing", "positioning"],
         customSettingsPropertiesOrder: [
             'showHeader',
             'showFooter',
