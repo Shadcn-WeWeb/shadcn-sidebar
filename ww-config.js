@@ -1,8 +1,4 @@
 export default {
-    options: {
-        displayAllowedValues: ['flex', 'block'],
-    },
-    inherit: [{ type: 'ww-layout' }, { type: 'ww-background-video' }],
     editor: {
         label: {
             en: 'Sidebar Section',
@@ -11,9 +7,13 @@ export default {
         icon: 'menu'
     },
     properties: {
-        wwObjects: {
-            hidden: true,
-            defaultValue: [],
+        sidebarContent: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-flexbox",
+                }
+            ],
         },
     }
 };
