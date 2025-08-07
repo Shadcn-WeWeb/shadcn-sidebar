@@ -6,10 +6,7 @@
     },
     "version": "1.0.0",
     "description": "Shadcn UI Sidebar Section for WeWeb",
-    "main": "src/wwElement.vue",
-    "weweb": {
-        "type": "section"
-    },
+    "main": "src/wwSection.vue",
     "scripts": {
         "build": "weweb build",
         "serve": "weweb serve"

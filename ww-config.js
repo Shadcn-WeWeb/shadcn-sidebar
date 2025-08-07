@@ -1,4 +1,5 @@
 export default {
+    inherit: [{ type: 'ww-layout' }],
     editor: {
         label: {
             en: 'Shadcn UI Sidebar',
@@ -565,6 +566,12 @@ export default {
             responsive: true,
             states: true,
             classes: true
+        },
+
+        /* === SECTION WEWEB === */
+        wwObjects: {
+            hidden: true,
+            defaultValue: []
         }
     }
 };
