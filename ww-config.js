@@ -54,169 +54,236 @@ export default {
     properties: {
         /* === ZONES DE DROPZONE WEWEB === */
         
-        // Zone Header de la sidebar
+        // Zone Header de la sidebar - HEADER SHADCN
         sidebarHeader: {
             defaultValue: [
                 {
                     isWwObject: true,
-                    type: "ww-flexbox",
+                    type: "sidebar-header",
                     content: {
-                        wwObjects: [
-                            {
-                                isWwObject: true,
-                                type: "ww-text",
-                                content: {
-                                    text: { en: "Shadcn UI", fr: "Shadcn UI" }
-                                },
-                                style: {
-                                    default: {
-                                        fontSize: "18px",
-                                        fontWeight: "600",
-                                        color: "var(--sidebar-primary)"
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    style: {
-                        default: {
-                            flexDirection: "column",
-                            gap: "8px",
-                            alignItems: "flex-start"
-                        }
+                        showLogo: true,
+                        logoType: "icon",
+                        logoIcon: "command",
+                        logoImage: "",
+                        logoAlt: { en: "Logo", fr: "Logo" },
+                        logoFallback: "S",
+                        showTitle: true,
+                        title: { en: "Shadcn UI", fr: "Shadcn UI" },
+                        showSubtitle: true,
+                        subtitle: { en: "Demo App", fr: "App Démo" }
                     }
                 }
             ]
         },
 
-        // Zone Navigation de la sidebar
+        // Zone Navigation de la sidebar - HIÉRARCHIE SHADCN
         sidebarNav: {
             defaultValue: [
+                // Groupe Principal
                 {
                     isWwObject: true,
-                    type: "ww-flexbox",
+                    type: "sidebar-group",
                     content: {
-                        wwObjects: [
+                        label: { en: "Platform", fr: "Plateforme" },
+                        showLabel: true,
+                        collapsible: false,
+                        collapsed: false,
+                        showPadding: true,
+                        groupItems: [
                             {
                                 isWwObject: true,
-                                type: "ww-button",
+                                type: "sidebar-button",
                                 content: {
-                                    text: { en: "Home", fr: "Accueil" }
-                                },
-                                style: {
-                                    default: {
-                                        width: "100%",
-                                        justifyContent: "flex-start",
-                                        backgroundColor: "var(--sidebar-primary)",
-                                        color: "var(--sidebar-primary-foreground)",
-                                        borderRadius: "6px",
-                                        padding: "8px 12px",
-                                        marginBottom: "4px"
-                                    },
-                                    hover: {
-                                        backgroundColor: "var(--sidebar-accent)"
-                                    }
+                                    text: { en: "Home", fr: "Accueil" },
+                                    active: true,
+                                    showIcon: true,
+                                    icon: "home",
+                                    badge: "",
+                                    hasSubmenu: false,
+                                    backgroundColor: "var(--sidebar-primary)",
+                                    textColor: "var(--sidebar-primary-foreground)"
                                 }
                             },
                             {
                                 isWwObject: true,
-                                type: "ww-button",
+                                type: "sidebar-button",
                                 content: {
-                                    text: { en: "Dashboard", fr: "Tableau de bord" }
-                                },
-                                style: {
-                                    default: {
-                                        width: "100%",
-                                        justifyContent: "flex-start",
-                                        backgroundColor: "transparent",
-                                        color: "var(--sidebar-foreground)",
-                                        borderRadius: "6px",
-                                        padding: "8px 12px",
-                                        marginBottom: "4px"
-                                    },
-                                    hover: {
-                                        backgroundColor: "var(--sidebar-accent)"
-                                    }
+                                    text: { en: "Inbox", fr: "Boîte de réception" },
+                                    active: false,
+                                    showIcon: true,
+                                    icon: "inbox",
+                                    badge: "3",
+                                    hasSubmenu: false
                                 }
                             },
                             {
                                 isWwObject: true,
-                                type: "ww-button",
+                                type: "sidebar-button",
                                 content: {
-                                    text: { en: "Settings", fr: "Paramètres" }
-                                },
-                                style: {
-                                    default: {
-                                        width: "100%",
-                                        justifyContent: "flex-start",
-                                        backgroundColor: "transparent",
-                                        color: "var(--sidebar-foreground)",
-                                        borderRadius: "6px",
-                                        padding: "8px 12px",
-                                        marginBottom: "4px"
-                                    },
-                                    hover: {
-                                        backgroundColor: "var(--sidebar-accent)"
-                                    }
+                                    text: { en: "Calendar", fr: "Calendrier" },
+                                    active: false,
+                                    showIcon: true,
+                                    icon: "calendar",
+                                    badge: "",
+                                    hasSubmenu: false
+                                }
+                            },
+                            {
+                                isWwObject: true,
+                                type: "sidebar-button",
+                                content: {
+                                    text: { en: "Search", fr: "Recherche" },
+                                    active: false,
+                                    showIcon: true,
+                                    icon: "search",
+                                    badge: "",
+                                    hasSubmenu: false
                                 }
                             }
                         ]
-                    },
-                    style: {
-                        default: {
-                            flexDirection: "column",
-                            gap: "4px",
-                            alignItems: "stretch"
-                        }
+                    }
+                },
+                // Groupe Settings avec sous-menu
+                {
+                    isWwObject: true,
+                    type: "sidebar-group",
+                    content: {
+                        label: { en: "Management", fr: "Gestion" },
+                        showLabel: true,
+                        collapsible: true,
+                        collapsed: false,
+                        showPadding: true,
+                        groupItems: [
+                            {
+                                isWwObject: true,
+                                type: "sidebar-button",
+                                content: {
+                                    text: { en: "Settings", fr: "Paramètres" },
+                                    active: false,
+                                    showIcon: true,
+                                    icon: "settings",
+                                    badge: "",
+                                    hasSubmenu: true
+                                }
+                            },
+                            {
+                                isWwObject: true,
+                                type: "sidebar-button",
+                                content: {
+                                    text: { en: "Users", fr: "Utilisateurs" },
+                                    active: false,
+                                    showIcon: true,
+                                    icon: "users",
+                                    badge: "",
+                                    hasSubmenu: false
+                                }
+                            }
+                        ]
                     }
                 }
             ]
         },
 
-        // Zone Footer de la sidebar
+        // Zone Footer de la sidebar - PROFIL UTILISATEUR
         sidebarFooter: {
             defaultValue: [
                 {
                     isWwObject: true,
-                    type: "ww-flexbox",
+                    type: "sidebar-group",
                     content: {
-                        wwObjects: [
+                        label: { en: "Account", fr: "Compte" },
+                        showLabel: false,
+                        collapsible: false,
+                        collapsed: false,
+                        showPadding: false,
+                        groupItems: [
                             {
                                 isWwObject: true,
-                                type: "ww-text",
+                                type: "ww-flexbox",
                                 content: {
-                                    text: { en: "John Doe", fr: "John Doe" }
+                                    wwObjects: [
+                                        {
+                                            isWwObject: true,
+                                            type: "ww-image",
+                                            content: {
+                                                url: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+                                            },
+                                            style: {
+                                                default: {
+                                                    width: "32px",
+                                                    height: "32px",
+                                                    borderRadius: "50%",
+                                                    objectFit: "cover",
+                                                    flexShrink: "0"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            isWwObject: true,
+                                            type: "ww-flexbox",
+                                            content: {
+                                                wwObjects: [
+                                                    {
+                                                        isWwObject: true,
+                                                        type: "ww-text",
+                                                        content: {
+                                                            text: { en: "John Doe", fr: "John Doe" }
+                                                        },
+                                                        style: {
+                                                            default: {
+                                                                fontSize: "14px",
+                                                                fontWeight: "500",
+                                                                color: "var(--sidebar-foreground)",
+                                                                lineHeight: "1.25",
+                                                                margin: "0"
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        isWwObject: true,
+                                                        type: "ww-text",
+                                                        content: {
+                                                            text: { en: "john@example.com", fr: "john@example.com" }
+                                                        },
+                                                        style: {
+                                                            default: {
+                                                                fontSize: "12px",
+                                                                color: "var(--sidebar-foreground)",
+                                                                opacity: "0.6",
+                                                                lineHeight: "1.25",
+                                                                margin: "0"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            style: {
+                                                default: {
+                                                    flexDirection: "column",
+                                                    gap: "2px",
+                                                    alignItems: "flex-start",
+                                                    flex: "1",
+                                                    minWidth: "0"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 },
                                 style: {
                                     default: {
-                                        fontSize: "14px",
-                                        fontWeight: "500",
-                                        color: "var(--sidebar-foreground)"
-                                    }
-                                }
-                            },
-                            {
-                                isWwObject: true,
-                                type: "ww-text",
-                                content: {
-                                    text: { en: "john@example.com", fr: "john@example.com" }
-                                },
-                                style: {
-                                    default: {
-                                        fontSize: "12px",
-                                        color: "var(--sidebar-foreground)",
-                                        opacity: "0.6"
+                                        flexDirection: "row",
+                                        gap: "12px",
+                                        alignItems: "center",
+                                        padding: "12px",
+                                        borderRadius: "6px",
+                                        cursor: "pointer"
+                                    },
+                                    hover: {
+                                        backgroundColor: "var(--sidebar-accent)"
                                     }
                                 }
                             }
                         ]
-                    },
-                    style: {
-                        default: {
-                            flexDirection: "column",
-                            gap: "2px",
-                            alignItems: "flex-start"
-                        }
                     }
                 }
             ]
