@@ -1,5 +1,4 @@
 export default {
-    inherit: { type: 'ww-layout', exclude: ['states'] },
     editor: {
         label: {
             en: 'Shadcn UI Sidebar',
