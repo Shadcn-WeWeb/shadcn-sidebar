@@ -1,420 +1,505 @@
 export default {
     editor: {
-        label: 'Shadcn UI Sidebar',
+        label: {
+            en: 'Shadcn UI Sidebar',
+            fr: 'Sidebar Shadcn UI'
+        },
         icon: 'menu',
+        // Section excludes pour laisser place aux zones de dropzone
+        excludedSections: ["spacing", "positioning"],
+        customSettingsPropertiesOrder: [
+            'showHeader',
+            'showFooter',
+            'showTrigger',
+            'hideContent',
+            'side',
+            'defaultOpen',
+            'keyboardShortcut',
+            'headerPadding',
+            'navPadding',
+            'footerPadding',
+            'contentPadding'
+        ],
         customStylePropertiesOrder: [
-            'variant',
-            'sidebarWidth', 
+            'sidebarWidth',
             'sidebarBg',
             'sidebarForeground',
+            'sidebarBorder',
             'sidebarPrimary',
             'sidebarPrimaryForeground',
             'sidebarAccent',
             'sidebarAccentForeground',
-            'sidebarBorder',
-            'sidebarRing'
-        ],
-        customSettingsPropertiesOrder: [
-            'showHeader',
-            'title',
-            'subtitle', 
-            'mainTitle',
-            'collapsible',
-            'variant',
-            'side',
-            'defaultOpen',
-            'keyboardShortcut',
-            'showTrigger',
-            'hideContent',
-            'menuItems',
-            'groupLabel',
-            'secondaryItems',
-            'secondaryGroupLabel',
-            'showFooter',
-            'userName',
-            'userEmail',
-            'userAvatar',
-            'userInitials'
+            'triggerBackground'
         ]
     },
     triggerEvents: [
         { 
             name: 'toggle', 
-            label: 'On Toggle', 
+            label: { 
+                en: 'On Toggle',
+                fr: 'Lors du basculement' 
+            }, 
             event: { 
                 open: true, 
                 openMobile: false, 
                 state: 'expanded', 
-                isMobile: false, 
-                collapsible: 'offcanvas' 
+                isMobile: false
             }, 
             default: true 
-        },
-        { 
-            name: 'item-click', 
-            label: 'On Menu Item Click', 
-            event: { 
-                item: {}, 
-                index: 0, 
-                parentIndex: null, 
-                label: '', 
-                hasSubItems: false 
-            } 
-        },
-        { 
-            name: 'secondary-item-click', 
-            label: 'On Secondary Item Click', 
-            event: { 
-                item: {}, 
-                index: 0, 
-                label: '' 
-            } 
-        },
+        }
     ],
+    options: {
+        forceHydration: true,
+    },
     properties: {
-        // Sidebar Structure - Configuration officielle Shadcn UI
+        /* === ZONES DE DROPZONE WEWEB === */
+        
+        // Zone Header de la sidebar
+        sidebarHeader: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-flexbox",
+                    content: {
+                        wwObjects: [
+                            {
+                                isWwObject: true,
+                                type: "ww-text",
+                                content: {
+                                    text: { en: "Shadcn UI", fr: "Shadcn UI" }
+                                },
+                                style: {
+                                    default: {
+                                        fontSize: "18px",
+                                        fontWeight: "600",
+                                        color: "var(--sidebar-primary)"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    style: {
+                        default: {
+                            flexDirection: "column",
+                            gap: "8px",
+                            alignItems: "flex-start"
+                        }
+                    }
+                }
+            ]
+        },
+
+        // Zone Navigation de la sidebar
+        sidebarNav: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-flexbox",
+                    content: {
+                        wwObjects: [
+                            {
+                                isWwObject: true,
+                                type: "ww-button",
+                                content: {
+                                    text: { en: "Home", fr: "Accueil" }
+                                },
+                                style: {
+                                    default: {
+                                        width: "100%",
+                                        justifyContent: "flex-start",
+                                        backgroundColor: "var(--sidebar-primary)",
+                                        color: "var(--sidebar-primary-foreground)",
+                                        borderRadius: "6px",
+                                        padding: "8px 12px",
+                                        marginBottom: "4px"
+                                    },
+                                    hover: {
+                                        backgroundColor: "var(--sidebar-accent)"
+                                    }
+                                }
+                            },
+                            {
+                                isWwObject: true,
+                                type: "ww-button",
+                                content: {
+                                    text: { en: "Dashboard", fr: "Tableau de bord" }
+                                },
+                                style: {
+                                    default: {
+                                        width: "100%",
+                                        justifyContent: "flex-start",
+                                        backgroundColor: "transparent",
+                                        color: "var(--sidebar-foreground)",
+                                        borderRadius: "6px",
+                                        padding: "8px 12px",
+                                        marginBottom: "4px"
+                                    },
+                                    hover: {
+                                        backgroundColor: "var(--sidebar-accent)"
+                                    }
+                                }
+                            },
+                            {
+                                isWwObject: true,
+                                type: "ww-button",
+                                content: {
+                                    text: { en: "Settings", fr: "Paramètres" }
+                                },
+                                style: {
+                                    default: {
+                                        width: "100%",
+                                        justifyContent: "flex-start",
+                                        backgroundColor: "transparent",
+                                        color: "var(--sidebar-foreground)",
+                                        borderRadius: "6px",
+                                        padding: "8px 12px",
+                                        marginBottom: "4px"
+                                    },
+                                    hover: {
+                                        backgroundColor: "var(--sidebar-accent)"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    style: {
+                        default: {
+                            flexDirection: "column",
+                            gap: "4px",
+                            alignItems: "stretch"
+                        }
+                    }
+                }
+            ]
+        },
+
+        // Zone Footer de la sidebar
+        sidebarFooter: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-flexbox",
+                    content: {
+                        wwObjects: [
+                            {
+                                isWwObject: true,
+                                type: "ww-text",
+                                content: {
+                                    text: { en: "John Doe", fr: "John Doe" }
+                                },
+                                style: {
+                                    default: {
+                                        fontSize: "14px",
+                                        fontWeight: "500",
+                                        color: "var(--sidebar-foreground)"
+                                    }
+                                }
+                            },
+                            {
+                                isWwObject: true,
+                                type: "ww-text",
+                                content: {
+                                    text: { en: "john@example.com", fr: "john@example.com" }
+                                },
+                                style: {
+                                    default: {
+                                        fontSize: "12px",
+                                        color: "var(--sidebar-foreground)",
+                                        opacity: "0.6"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    style: {
+                        default: {
+                            flexDirection: "column",
+                            gap: "2px",
+                            alignItems: "flex-start"
+                        }
+                    }
+                }
+            ]
+        },
+
+        // Zone Header du contenu principal
+        mainHeader: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-text",
+                    content: {
+                        text: { en: "Dashboard", fr: "Tableau de bord" }
+                    },
+                    style: {
+                        default: {
+                            fontSize: "20px",
+                            fontWeight: "600",
+                            color: "#1f2937"
+                        }
+                    }
+                }
+            ]
+        },
+
+        // Zone contenu principal
+        mainContent: {
+            defaultValue: [
+                {
+                    isWwObject: true,
+                    type: "ww-text",
+                    content: {
+                        text: { 
+                            en: "Welcome to your Shadcn UI sidebar! Drop elements here to build your content.", 
+                            fr: "Bienvenue dans votre sidebar Shadcn UI ! Déposez des éléments ici pour construire votre contenu." 
+                        }
+                    },
+                    style: {
+                        default: {
+                            fontSize: "16px",
+                            color: "#6b7280",
+                            textAlign: "center",
+                            padding: "40px 20px"
+                        }
+                    }
+                }
+            ]
+        },
+
+        /* === CONFIGURATION SIDEBAR === */
+        
         showHeader: {
-            label: { en: "Show header", fr: "Afficher l'en-tête" },
+            label: { en: "Show header zone", fr: "Afficher zone d'en-tête" },
             type: "OnOff",
             section: "settings",
             defaultValue: true,
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
-        title: {
-            label: { en: "Application title", fr: "Titre de l'application" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "Shadcn UI",
-            bindable: true
-        },
-        subtitle: {
-            label: { en: "Application subtitle", fr: "Sous-titre de l'application" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "Demo App",
-            bindable: true
-        },
-        mainTitle: {
-            label: { en: "Main content title", fr: "Titre du contenu principal" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "Dashboard",
-            bindable: true
-        },
-        collapsible: {
-            label: { en: "Collapsible mode", fr: "Mode repliable" },
-            type: "TextSelect",
-            options: {
-                choices: [
-                    { label: "Offcanvas (mobile overlay)", value: "offcanvas" },
-                    { label: "Icon (collapse to icons)", value: "icon" },
-                    { label: "None (always visible)", value: "none" }
-                ]
-            },
-            defaultValue: "offcanvas",
-            section: "settings",
-            bindable: true
-        },
-        defaultOpen: {
-            label: { en: "Default open", fr: "Ouvert par défaut" },
+
+        showFooter: {
+            label: { en: "Show footer zone", fr: "Afficher zone de pied" },
             type: "OnOff",
             section: "settings",
             defaultValue: true,
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
-        side: {
-            label: { en: "Side", fr: "Côté" },
-            type: "TextSelect",
-            options: {
-                choices: [
-                    { label: "Left", value: "left" },
-                    { label: "Right", value: "right" }
-                ]
-            },
-            defaultValue: "left",
-            section: "settings"
-        },
-        keyboardShortcut: {
-            label: { en: "Keyboard shortcut (Cmd+B)", fr: "Raccourci clavier (Cmd+B)" },
-            type: "OnOff",
-            section: "settings",
-            defaultValue: true,
-            bindable: true
-        },
+
         showTrigger: {
             label: { en: "Show header trigger", fr: "Afficher bouton dans l'en-tête" },
             type: "OnOff",
             section: "settings",
             defaultValue: true,
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
+
         hideContent: {
             label: { en: "Hide main content area", fr: "Masquer la zone de contenu principal" },
             type: "OnOff",
             section: "settings",
             defaultValue: false,
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
-        
-        // Appearance
-        variant: {
-            label: { en: "Variant", fr: "Variante" },
+
+        side: {
+            label: { en: "Side", fr: "Côté" },
             type: "TextSelect",
             options: {
-                choices: [
-                    { label: "Sidebar (default)", value: "sidebar" },
-                    { label: "Floating (rounded with shadow)", value: "floating" },
-                    { label: "Inset (subtle background)", value: "inset" }
+                options: [
+                    { label: { en: "Left", fr: "Gauche" }, value: "left" },
+                    { label: { en: "Right", fr: "Droite" }, value: "right" }
                 ]
             },
-            defaultValue: "sidebar",
-            section: "style"
-        },
-        sidebarWidth: {
-            label: { en: "Sidebar width", fr: "Largeur du sidebar" },
-            type: "Text",
-            section: "style",
-            defaultValue: "16rem",
-            bindable: true
+            defaultValue: "left",
+            section: "settings",
+            responsive: true,
+            states: true,
+            classes: true
         },
 
-        // Navigation Menu
-        menuItems: {
-            label: { en: "Menu items", fr: "Éléments de menu" },
-            type: "Array",
-            section: "settings",
-            options: {
-                item: {
-                    type: "Object",
-                    options: {
-                        item: {
-                            icon: {
-                                label: { en: "Icon name", fr: "Nom d'icône" },
-                                type: "TextSelect",
-                                options: {
-                                    choices: [
-                                        { label: "Home", value: "home" },
-                                        { label: "Inbox", value: "inbox" },
-                                        { label: "Calendar", value: "calendar" },
-                                        { label: "Search", value: "search" },
-                                        { label: "Settings", value: "settings" },
-                                        { label: "Help Circle", value: "help-circle" }
-                                    ]
-                                },
-                                bindable: true
-                            },
-                            label: {
-                                label: { en: "Label", fr: "Libellé" },
-                                type: "Text",
-                                bindable: true
-                            },
-                            badge: {
-                                label: { en: "Badge", fr: "Badge" },
-                                type: "Text",
-                                bindable: true
-                            },
-                            active: {
-                                label: { en: "Active", fr: "Actif" },
-                                type: "OnOff",
-                                bindable: true
-                            },
-                            disabled: {
-                                label: { en: "Disabled", fr: "Désactivé" },
-                                type: "OnOff",
-                                bindable: true
-                            },
-                            subItems: {
-                                label: { en: "Sub items", fr: "Sous-éléments" },
-                                type: "Array",
-                                bindable: true,
-                                options: {
-                                    item: {
-                                        type: "Object",
-                                        options: {
-                                            item: {
-                                                label: {
-                                                    label: { en: "Label", fr: "Libellé" },
-                                                    type: "Text",
-                                                    bindable: true
-                                                },
-                                                active: {
-                                                    label: { en: "Active", fr: "Actif" },
-                                                    type: "OnOff",
-                                                    bindable: true
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            defaultValue: [
-                { icon: "home", label: "Home", active: true },
-                { icon: "inbox", label: "Inbox", badge: "3" },
-                { icon: "calendar", label: "Calendar" },
-                { icon: "search", label: "Search" },
-                { icon: "settings", label: "Settings" }
-            ],
-            bindable: true
-        },
-
-        // Secondary Navigation
-        secondaryItems: {
-            label: { en: "Secondary items", fr: "Éléments secondaires" },
-            type: "Array",
-            section: "settings",
-            options: {
-                item: {
-                    type: "Object",
-                    options: {
-                        item: {
-                            icon: {
-                                label: { en: "Icon name", fr: "Nom d'icône" },
-                                type: "TextSelect",
-                                options: {
-                                    choices: [
-                                        { label: "Home", value: "home" },
-                                        { label: "Inbox", value: "inbox" },
-                                        { label: "Calendar", value: "calendar" },
-                                        { label: "Search", value: "search" },
-                                        { label: "Settings", value: "settings" },
-                                        { label: "Help Circle", value: "help-circle" }
-                                    ]
-                                },
-                                bindable: true
-                            },
-                            label: {
-                                label: { en: "Label", fr: "Libellé" },
-                                type: "Text",
-                                bindable: true
-                            },
-                            disabled: {
-                                label: { en: "Disabled", fr: "Désactivé" },
-                                type: "OnOff",
-                                bindable: true
-                            }
-                        }
-                    }
-                }
-            },
-            defaultValue: [
-                { icon: "help-circle", label: "Help & Support" }
-            ],
-            bindable: true
-        },
-
-        // Group Labels
-        groupLabel: {
-            label: { en: "Main group label", fr: "Label du groupe principal" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "Platform",
-            bindable: true
-        },
-        secondaryGroupLabel: {
-            label: { en: "Secondary group label", fr: "Label groupe secondaire" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "Support",
-            bindable: true
-        },
-
-        // User Footer settings
-        showFooter: {
-            label: { en: "Show footer", fr: "Afficher le pied" },
+        defaultOpen: {
+            label: { en: "Default open", fr: "Ouvert par défaut" },
             type: "OnOff",
             section: "settings",
             defaultValue: true,
-            bindable: true
-        },
-        userName: {
-            label: { en: "User name", fr: "Nom d'utilisateur" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "John Doe",
-            bindable: true
-        },
-        userEmail: {
-            label: { en: "User email", fr: "Email utilisateur" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "john@example.com",
-            bindable: true
-        },
-        userAvatar: {
-            label: { en: "User avatar URL", fr: "URL avatar utilisateur" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "",
-            bindable: true
-        },
-        userInitials: {
-            label: { en: "User initials", fr: "Initiales utilisateur" },
-            type: "Text",
-            section: "settings",
-            defaultValue: "",
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
 
-        // Shadcn UI CSS Variables - Format HSL
+        keyboardShortcut: {
+            label: { en: "Keyboard shortcut (Cmd+B)", fr: "Raccourci clavier (Cmd+B)" },
+            type: "OnOff",
+            section: "settings",
+            defaultValue: true,
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        /* === ESPACEMENT DES ZONES === */
+
+        headerPadding: {
+            label: { en: "Header padding", fr: "Espacement en-tête" },
+            type: "Length",
+            section: "settings",
+            defaultValue: "1rem",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        navPadding: {
+            label: { en: "Navigation padding", fr: "Espacement navigation" },
+            type: "Length",
+            section: "settings",
+            defaultValue: "1rem",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        footerPadding: {
+            label: { en: "Footer padding", fr: "Espacement pied" },
+            type: "Length",
+            section: "settings",
+            defaultValue: "1rem",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        contentPadding: {
+            label: { en: "Content padding", fr: "Espacement contenu" },
+            type: "Length",
+            section: "settings",
+            defaultValue: "1rem",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        /* === STYLE SIDEBAR === */
+
+        sidebarWidth: {
+            label: { en: "Sidebar width", fr: "Largeur sidebar" },
+            type: "Length",
+            section: "style",
+            defaultValue: "16rem",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true,
+            bindingValidation: {
+                markdown: "width",
+                type: "string",
+                cssSupports: "width",
+            }
+        },
+
         sidebarBg: {
             label: { en: "Sidebar background (HSL)", fr: "Arrière-plan sidebar (HSL)" },
             type: "Text",
             section: "style",
             defaultValue: "0 0% 98%",
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
+
         sidebarForeground: {
             label: { en: "Sidebar foreground (HSL)", fr: "Texte sidebar (HSL)" },
             type: "Text",
             section: "style",
             defaultValue: "240 5.3% 26.1%",
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
-        sidebarPrimary: {
-            label: { en: "Sidebar primary (HSL)", fr: "Couleur principale sidebar (HSL)" },
-            type: "Text",
-            section: "style",
-            defaultValue: "240 5.9% 10%",
-            bindable: true
-        },
-        sidebarPrimaryForeground: {
-            label: { en: "Sidebar primary foreground (HSL)", fr: "Texte principal sidebar (HSL)" },
-            type: "Text",
-            section: "style",
-            defaultValue: "0 0% 98%",
-            bindable: true
-        },
-        sidebarAccent: {
-            label: { en: "Sidebar accent (HSL)", fr: "Accent sidebar (HSL)" },
-            type: "Text",
-            section: "style",
-            defaultValue: "240 4.8% 95.9%",
-            bindable: true
-        },
-        sidebarAccentForeground: {
-            label: { en: "Sidebar accent foreground (HSL)", fr: "Texte accent sidebar (HSL)" },
-            type: "Text",
-            section: "style",
-            defaultValue: "240 5.9% 10%",
-            bindable: true
-        },
+
         sidebarBorder: {
             label: { en: "Sidebar border (HSL)", fr: "Bordure sidebar (HSL)" },
             type: "Text",
             section: "style",
             defaultValue: "220 13% 91%",
-            bindable: true
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         },
-        sidebarRing: {
-            label: { en: "Sidebar ring (HSL)", fr: "Ring sidebar (HSL)" },
+
+        sidebarPrimary: {
+            label: { en: "Sidebar primary (HSL)", fr: "Couleur principale sidebar (HSL)" },
             type: "Text",
             section: "style",
-            defaultValue: "217.2 91.2% 59.8%",
-            bindable: true
+            defaultValue: "240 5.9% 10%",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        sidebarPrimaryForeground: {
+            label: { en: "Sidebar primary foreground (HSL)", fr: "Texte principal sidebar (HSL)" },
+            type: "Text",
+            section: "style",
+            defaultValue: "0 0% 98%",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        sidebarAccent: {
+            label: { en: "Sidebar accent (HSL)", fr: "Accent sidebar (HSL)" },
+            type: "Text",
+            section: "style",
+            defaultValue: "240 4.8% 95.9%",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        sidebarAccentForeground: {
+            label: { en: "Sidebar accent foreground (HSL)", fr: "Texte accent sidebar (HSL)" },
+            type: "Text",
+            section: "style",
+            defaultValue: "240 5.9% 10%",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
+        },
+
+        triggerBackground: {
+            label: { en: "Trigger background", fr: "Arrière-plan bouton" },
+            type: "Color",
+            section: "style",
+            defaultValue: "white",
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true
         }
     }
 };

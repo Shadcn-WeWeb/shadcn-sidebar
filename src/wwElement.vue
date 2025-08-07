@@ -1,131 +1,109 @@
 <template>
-    <!-- SidebarProvider - Structure exacte Shadcn UI -->
+    <!-- SidebarProvider - Architecture WeWeb Section -->
     <div 
-        class="sidebar-container"
+        class="sidebar-section"
+        :class="{
+            'sidebar-collapsed': !open && !isMobile,
+            'sidebar-mobile': isMobile,
+            'sidebar-right': content.side === 'right'
+        }"
         :style="sidebarCSSVariables"
     >
         <!-- Mobile Overlay -->
         <div 
-            v-if="isMobile"
+            v-if="isMobile && openMobile"
             class="sidebar-overlay"
-            :class="{active: openMobile}"
             @click="setOpenMobile(false)"
         ></div>
 
-        <!-- Sidebar - Architecture simplifiée -->
+        <!-- Sidebar Container -->
         <div 
-            class="shadcn-sidebar"
+            class="sidebar-container"
             :class="{
-                collapsed: !open && !isMobile,
-                mobile: isMobile,
-                closed: isMobile && !openMobile
+                'sidebar-hidden': !open && !isMobile,
+                'sidebar-mobile-hidden': isMobile && !openMobile
             }"
         >
-            <!-- Header -->
-            <div class="sidebar-header" v-if="content.showHeader">
-                <div class="sidebar-logo">
-                    <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <div>
-                    <div class="sidebar-title">{{ content.title || 'Shadcn UI' }}</div>
-                    <div class="sidebar-subtitle">{{ content.subtitle || 'Demo App' }}</div>
-                </div>
+            <!-- Header Dropzone -->
+            <div class="sidebar-header-zone" v-if="content.showHeader">
+                <wwLayout
+                    class="sidebar-header-layout"
+                    path="sidebarHeader"
+                    direction="column"
+                    :style="headerStyle"
+                />
             </div>
 
-            <!-- Navigation -->
-            <div class="sidebar-nav">
-                <!-- Main Group -->
-                <div class="nav-group">
-                    <div class="nav-label" v-if="content.groupLabel">{{ content.groupLabel }}</div>
-                    
-                    <a 
-                        v-for="(item, index) in menuItems" 
-                        :key="index"
-                        href="#"
-                        class="nav-item"
-                        :class="{ active: item.active }"
-                        @click.prevent="handleItemClick(item, index)"
-                    >
-                        <span class="nav-icon" v-html="getIconSvg(item.icon)" v-if="item.icon"></span>
-                        <span>{{ item.label }}</span>
-                        <span v-if="item.badge" class="nav-badge">{{ item.badge }}</span>
-                    </a>
-                </div>
-
-                <!-- Secondary Group -->
-                <div class="nav-group" v-if="secondaryItems.length > 0">
-                    <div class="nav-label" v-if="content.secondaryGroupLabel">{{ content.secondaryGroupLabel }}</div>
-                    
-                    <a 
-                        v-for="(item, index) in secondaryItems" 
-                        :key="index"
-                        href="#"
-                        class="nav-item"
-                        @click.prevent="handleSecondaryItemClick(item, index)"
-                    >
-                        <span class="nav-icon" v-html="getIconSvg(item.icon)" v-if="item.icon"></span>
-                        <span>{{ item.label }}</span>
-                    </a>
-                </div>
+            <!-- Navigation Dropzone -->
+            <div class="sidebar-nav-zone">
+                <wwLayout
+                    class="sidebar-nav-layout"
+                    path="sidebarNav"
+                    direction="column"
+                    :style="navStyle"
+                />
             </div>
 
-            <!-- Footer -->
-            <div class="sidebar-footer" v-if="content.showFooter">
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <img v-if="content.userAvatar" :src="content.userAvatar" :alt="content.userName" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
-                        <span v-else>{{ getUserInitials() }}</span>
-                    </div>
-                    <div class="user-info">
-                        <div class="user-name">{{ content.userName || 'John Doe' }}</div>
-                        <div class="user-email">{{ content.userEmail || 'john@example.com' }}</div>
-                    </div>
-                </div>
+            <!-- Footer Dropzone -->
+            <div class="sidebar-footer-zone" v-if="content.showFooter">
+                <wwLayout
+                    class="sidebar-footer-layout"
+                    path="sidebarFooter"
+                    direction="column"
+                    :style="footerStyle"
+                />
             </div>
         </div>
 
         <!-- Main Content Area -->
         <div 
-            class="sidebar-main"
+            class="sidebar-main-area"
             :class="{
-                collapsed: !open && !isMobile,
-                mobile: isMobile
+                'main-collapsed': !open && !isMobile,
+                'main-mobile': isMobile
             }"
         >
             <!-- Header avec Trigger -->
-            <header class="main-header" v-if="content.showTrigger">
-                <!-- SidebarTrigger -->
+            <div class="main-header-zone" v-if="content.showTrigger">
                 <button 
                     class="sidebar-trigger"
                     @click="toggleSidebar"
+                    :style="triggerStyle"
                 >
                     <!-- Menu icon -->
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="7" x="3" y="3" rx="1"/>
                         <rect width="9" height="7" x="3" y="14" rx="1"/>
                     </svg>
-                    <span class="sr-only">Toggle Sidebar</span>
                 </button>
-                <h1 class="main-title">{{ content.mainTitle || 'Dashboard' }}</h1>
-            </header>
+                
+                <!-- Header Content Dropzone -->
+                <wwLayout
+                    class="main-header-layout"
+                    path="mainHeader"
+                    direction="row"
+                    :style="mainHeaderStyle"
+                />
+            </div>
 
-            <!-- Content Slot -->
-            <div class="main-content" v-if="!content.hideContent">
-                <slot></slot>
+            <!-- Main Content Dropzone -->
+            <div class="main-content-zone" v-if="!content.hideContent">
+                <wwLayout
+                    class="main-content-layout"
+                    path="mainContent"
+                    direction="column"
+                    :style="mainContentStyle"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-
 export default {
-    name: 'ShadcnSidebar',
+    name: 'ShadcnSidebarSection',
     props: {
         content: { type: Object, required: true },
-        wwElementState: { type: Object, required: true },
         /* wwEditor:start */
         wwEditorState: { type: Object, required: true },
         /* wwEditor:end */
@@ -133,12 +111,12 @@ export default {
     emits: ["trigger-event"],
     data() {
         return {
-            // Constants - exact comme le code officiel
+            // Constants
             SIDEBAR_WIDTH: "16rem",
             SIDEBAR_WIDTH_MOBILE: "18rem", 
             SIDEBAR_WIDTH_ICON: "3rem",
             
-            // Hook useSidebar state - exact
+            // State
             open: this.content.defaultOpen !== false,
             openMobile: false,
             isMobile: false,
@@ -146,10 +124,10 @@ export default {
     },
     mounted() {
         // Détection mobile
-        this.isMobile = window.innerWidth < 768;
+        this.checkMobile();
         window.addEventListener('resize', this.handleResize);
         
-        // Keyboard shortcut - exact comme l'original
+        // Keyboard shortcut
         if (this.content.keyboardShortcut !== false) {
             document.addEventListener('keydown', this.handleKeyboardShortcut);
         }
@@ -161,11 +139,6 @@ export default {
         window.removeEventListener('resize', this.handleResize);
     },
     computed: {
-        // useSidebar computed - exact
-        collapsibleType() {
-            return this.content.collapsible || 'offcanvas';
-        },
-        
         state() {
             return this.open ? 'expanded' : 'collapsed';
         },
@@ -175,60 +148,61 @@ export default {
                 '--sidebar-width': this.content.sidebarWidth || this.SIDEBAR_WIDTH,
                 '--sidebar-width-icon': this.SIDEBAR_WIDTH_ICON,
                 '--sidebar-width-mobile': this.SIDEBAR_WIDTH_MOBILE,
-                // Shadcn UI CSS Variables exactes - utilisation des nouvelles variables
-                '--sidebar-background': this.content.sidebarBg || '0 0% 98%',
-                '--sidebar-foreground': this.content.sidebarForeground || '240 5.3% 26.1%',
-                '--sidebar-primary': this.content.sidebarPrimary || '240 5.9% 10%',
-                '--sidebar-primary-foreground': this.content.sidebarPrimaryForeground || '0 0% 98%',
-                '--sidebar-accent': this.content.sidebarAccent || '240 4.8% 95.9%',
-                '--sidebar-accent-foreground': this.content.sidebarAccentForeground || '240 5.9% 10%',
-                '--sidebar-border': this.content.sidebarBorder || '220 13% 91%',
-                '--sidebar-ring': this.content.sidebarRing || '217.2 91.2% 59.8%'
+                '--sidebar-background': `hsl(${this.content.sidebarBg || '0 0% 98%'})`,
+                '--sidebar-foreground': `hsl(${this.content.sidebarForeground || '240 5.3% 26.1%'})`,
+                '--sidebar-border': `hsl(${this.content.sidebarBorder || '220 13% 91%'})`,
+                '--sidebar-primary': `hsl(${this.content.sidebarPrimary || '240 5.9% 10%'})`,
+                '--sidebar-primary-foreground': `hsl(${this.content.sidebarPrimaryForeground || '0 0% 98%'})`,
+                '--sidebar-accent': `hsl(${this.content.sidebarAccent || '240 4.8% 95.9%'})`,
+                '--sidebar-accent-foreground': `hsl(${this.content.sidebarAccentForeground || '240 5.9% 10%'})`,
             };
         },
 
-        menuItems() {
-            return this.content.menuItems || [
-                { 
-                    icon: 'home', 
-                    label: 'Home', 
-                    active: true 
-                },
-                { 
-                    icon: 'inbox', 
-                    label: 'Inbox', 
-                    badge: '3' 
-                },
-                { 
-                    icon: 'calendar', 
-                    label: 'Calendar' 
-                },
-                { 
-                    icon: 'search', 
-                    label: 'Search' 
-                },
-                { 
-                    icon: 'settings', 
-                    label: 'Settings',
-                    subItems: [
-                        { label: 'General', active: false },
-                        { label: 'Team', active: false },
-                        { label: 'Billing', active: false }
-                    ]
-                }
-            ];
+        headerStyle() {
+            return {
+                borderBottom: `1px solid hsl(${this.content.sidebarBorder || '220 13% 91%'})`,
+                padding: this.content.headerPadding || '1rem',
+            };
         },
 
-        secondaryItems() {
-            return this.content.secondaryItems || [
-                { icon: 'help-circle', label: 'Support' },
-                { icon: 'settings', label: 'Settings' }
-            ];
+        navStyle() {
+            return {
+                flex: '1',
+                padding: this.content.navPadding || '1rem',
+                overflowY: 'auto',
+            };
         },
 
+        footerStyle() {
+            return {
+                borderTop: `1px solid hsl(${this.content.sidebarBorder || '220 13% 91%'})`,
+                padding: this.content.footerPadding || '1rem',
+            };
+        },
+
+        triggerStyle() {
+            return {
+                border: `1px solid hsl(${this.content.sidebarBorder || '220 13% 91%'})`,
+                backgroundColor: this.content.triggerBackground || 'white',
+            };
+        },
+
+        mainHeaderStyle() {
+            return {
+                flex: '1',
+                alignItems: 'center',
+            };
+        },
+
+        mainContentStyle() {
+            return {
+                flex: '1',
+                padding: this.content.contentPadding || '1rem',
+                overflow: 'auto',
+            };
+        },
     },
     methods: {
-        // useSidebar methods - exact comme l'original
         toggleSidebar() {
             if (this.isMobile) {
                 this.setOpenMobile(!this.openMobile);
@@ -239,7 +213,7 @@ export default {
         
         setOpen(value) {
             this.open = value;
-            // Cookie storage comme l'original
+            // Cookie storage
             if (typeof document !== 'undefined') {
                 document.cookie = `sidebar_state=${value}; path=/; max-age=${60 * 60 * 24 * 7}`;
             }
@@ -261,7 +235,6 @@ export default {
                     openMobile: this.openMobile,
                     state: this.state,
                     isMobile: this.isMobile,
-                    collapsible: this.collapsibleType
                 }
             });
         },
@@ -280,125 +253,145 @@ export default {
         },
 
         handleKeyboardShortcut(event) {
-            // Keyboard shortcut - EXACT comme l'original (Cmd+B / Ctrl+B)
+            // Keyboard shortcut (Cmd+B / Ctrl+B)
             if (event.key === 'b' && (event.metaKey || event.ctrlKey)) {
                 event.preventDefault();
                 this.toggleSidebar();
             }
         },
-
-        handleItemClick(item, index, parentIndex = null) {
-            if (item.disabled) return;
-            
-            // Toggle sub-items if they exist
-            if (item.subItems) {
-                const targetItem = parentIndex !== null ? this.menuItems[parentIndex] : item;
-                targetItem.expanded = !targetItem.expanded;
-            }
-            
-            this.$emit("trigger-event", {
-                name: "item-click",
-                event: { 
-                    item,
-                    index,
-                    parentIndex,
-                    label: item.label,
-                    hasSubItems: !!item.subItems
-                }
-            });
-        },
-
-        handleSecondaryItemClick(item, index) {
-            if (item.disabled) return;
-            
-            this.$emit("trigger-event", {
-                name: "secondary-item-click",
-                event: { 
-                    item,
-                    index,
-                    label: item.label
-                }
-            });
-        },
-
-        getUserInitials() {
-            if (this.content.userInitials) return this.content.userInitials;
-            
-            const name = this.content.userName || 'User';
-            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        },
-
-        getIconSvg(iconName) {
-            const icons = {
-                home: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>',
-                inbox: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>',
-                calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>',
-                search: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
-                settings: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>',
-                'help-circle': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><point cx="12" cy="17" r=".02"/></svg>'
-            };
-            
-            return icons[iconName] || icons.home;
-        }
     }
 };
 </script>
 
 <style scoped>
-/* === SIDEBAR SHADCN UI - ARCHITECTURE CLAUDE.md === */
+/* === SIDEBAR SECTION - ARCHITECTURE WEWEB === */
 
-/* Conteneur principal - WeWeb écrase ce niveau */
-.sidebar-container {
+/* Conteneur principal de section */
+.sidebar-section {
     display: flex;
     min-height: 100vh;
     width: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: hsl(var(--sidebar-background, 0 0% 98%));
-    color: hsl(var(--sidebar-foreground, 240 5.3% 26.1%));
+    background-color: var(--sidebar-background);
+    color: var(--sidebar-foreground);
+    position: relative;
 }
 
-/* Layout de base - SIMPLE */
-.shadcn-sidebar {
+/* Sidebar Container */
+.sidebar-container {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 40;
-    width: var(--sidebar-width, 16rem);
-    background-color: hsl(var(--sidebar-background, 0 0% 98%));
-    border-right: 1px solid hsl(var(--sidebar-border, 220 13% 91%));
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-background);
+    border-right: 1px solid var(--sidebar-border);
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease;
 }
 
-.shadcn-sidebar.collapsed {
+.sidebar-section.sidebar-right .sidebar-container {
+    left: auto;
+    right: 0;
+    border-right: none;
+    border-left: 1px solid var(--sidebar-border);
+}
+
+.sidebar-hidden {
     transform: translateX(-100%);
 }
 
-.shadcn-sidebar.mobile {
+.sidebar-section.sidebar-right .sidebar-hidden {
+    transform: translateX(100%);
+}
+
+.sidebar-mobile-hidden {
+    transform: translateX(-100%);
+}
+
+.sidebar-section.sidebar-right .sidebar-mobile-hidden {
+    transform: translateX(100%);
+}
+
+.sidebar-mobile .sidebar-container {
     z-index: 50;
-    width: var(--sidebar-width-mobile, 18rem);
+    width: var(--sidebar-width-mobile);
 }
 
-.shadcn-sidebar.mobile.closed {
-    transform: translateX(-100%);
+/* Zones de dropzone */
+.sidebar-header-zone,
+.sidebar-nav-zone,
+.sidebar-footer-zone {
+    min-height: 60px;
 }
 
-/* Contenu principal */
-.sidebar-main {
-    margin-left: var(--sidebar-width, 16rem);
+.sidebar-header-layout,
+.sidebar-nav-layout,
+.sidebar-footer-layout {
+    width: 100%;
+    min-height: inherit;
+}
+
+/* Main Content Area */
+.sidebar-main-area {
+    margin-left: var(--sidebar-width);
     min-height: 100vh;
     flex: 1;
+    display: flex;
+    flex-direction: column;
     transition: margin-left 0.3s ease;
 }
 
-.sidebar-main.collapsed {
+.sidebar-section.sidebar-right .sidebar-main-area {
+    margin-left: 0;
+    margin-right: var(--sidebar-width);
+    transition: margin-right 0.3s ease;
+}
+
+.main-collapsed {
     margin-left: 0;
 }
 
-.sidebar-main.mobile {
+.sidebar-section.sidebar-right .main-collapsed {
+    margin-right: 0;
+}
+
+.main-mobile {
     margin-left: 0;
+    margin-right: 0;
+}
+
+/* Header zone */
+.main-header-zone {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 4rem;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
+    background-color: white;
+    flex-shrink: 0;
+}
+
+.main-header-layout {
+    flex: 1;
+    min-height: 2rem;
+}
+
+/* Content zone */
+.main-content-zone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main-content-layout {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
 }
 
 /* Overlay mobile */
@@ -407,153 +400,9 @@ export default {
     inset: 0;
     z-index: 40;
     background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.sidebar-overlay.active {
     opacity: 1;
     visibility: visible;
-}
-
-/* Header sidebar */
-.sidebar-header {
-    padding: 1rem;
-    border-bottom: 1px solid hsl(var(--sidebar-border, 220 13% 91%));
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.sidebar-logo {
-    width: 2rem;
-    height: 2rem;
-    background-color: hsl(var(--sidebar-primary, 240 5.9% 10%));
-    color: hsl(var(--sidebar-primary-foreground, 0 0% 98%));
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.sidebar-title {
-    font-weight: 600;
-    font-size: 0.875rem;
-}
-
-.sidebar-subtitle {
-    font-size: 0.75rem;
-    color: hsl(var(--sidebar-foreground, 240 5.3% 26.1%) / 0.6);
-}
-
-/* Navigation */
-.sidebar-nav {
-    flex: 1;
-    padding: 1rem;
-    overflow-y: auto;
-}
-
-.nav-group {
-    margin-bottom: 1.5rem;
-}
-
-.nav-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: hsl(var(--sidebar-foreground, 240 5.3% 26.1%) / 0.6);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0 0.75rem;
-    margin-bottom: 0.25rem;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    color: hsl(var(--sidebar-foreground, 240 5.3% 26.1%));
-    text-decoration: none;
-    transition: all 0.15s ease;
-    cursor: pointer;
-    margin-bottom: 0.25rem;
-}
-
-.nav-item:hover {
-    background-color: hsl(var(--sidebar-accent, 240 4.8% 95.9%));
-    color: hsl(var(--sidebar-accent-foreground, 240 5.9% 10%));
-}
-
-.nav-item.active {
-    background-color: hsl(var(--sidebar-primary, 240 5.9% 10%));
-    color: hsl(var(--sidebar-primary-foreground, 0 0% 98%));
-}
-
-.nav-icon {
-    width: 1rem;
-    height: 1rem;
-    flex-shrink: 0;
-}
-
-.nav-badge {
-    margin-left: auto;
-    background-color: hsl(var(--sidebar-primary, 240 5.9% 10%));
-    color: hsl(var(--sidebar-primary-foreground, 0 0% 98%));
-    font-size: 0.75rem;
-    padding: 0.125rem 0.5rem;
-    border-radius: 9999px;
-}
-
-/* Footer */
-.sidebar-footer {
-    padding: 1rem;
-    border-top: 1px solid hsl(var(--sidebar-border, 220 13% 91%));
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border-radius: 0.5rem;
-}
-
-.user-avatar {
-    width: 2rem;
-    height: 2rem;
-    background-color: hsl(var(--sidebar-primary, 240 5.9% 10%));
-    color: hsl(var(--sidebar-primary-foreground, 0 0% 98%));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.user-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.user-name {
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.user-email {
-    font-size: 0.75rem;
-    color: hsl(var(--sidebar-foreground, 240 5.3% 26.1%) / 0.6);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    transition: all 0.3s ease;
 }
 
 /* Trigger button */
@@ -564,84 +413,46 @@ export default {
     width: 1.75rem;
     height: 1.75rem;
     border-radius: 0.375rem;
-    border: 1px solid hsl(var(--sidebar-border, 220 13% 91%));
-    background-color: hsl(0 0% 100%);
+    background-color: white;
     color: hsl(222.2 84% 4.9%);
     cursor: pointer;
     transition: all 0.15s ease;
+    flex-shrink: 0;
 }
 
 .sidebar-trigger:hover {
     background-color: hsl(210 40% 96%);
 }
 
-/* Header principal */
-.main-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    height: 4rem;
-    padding: 0 1rem;
-    border-bottom: 1px solid hsl(var(--sidebar-border, 220 13% 91%));
-    background-color: white;
-}
-
-.main-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-}
-
-/* Contenu principal */
-.main-content {
-    flex: 1;
-    padding: 1rem;
-    overflow: auto;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
-    .shadcn-sidebar {
+    .sidebar-container {
         transform: translateX(-100%);
     }
     
-    .sidebar-main {
-        margin-left: 0;
+    .sidebar-section.sidebar-right .sidebar-container {
+        transform: translateX(100%);
     }
     
-    .main-header {
-        display: flex;
+    .sidebar-main-area {
+        margin-left: 0;
+        margin-right: 0;
     }
-}
-
-/* Screen reader */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
 }
 </style>
 
-<!-- Variables CSS Shadcn UI intégrées directement -->
+<!-- Variables CSS globales pour les éléments enfants -->
 <style>
 :root {
-  /* Sidebar specific variables */
-  --sidebar-background: 0 0% 98%;
-  --sidebar-foreground: 240 5.3% 26.1%;
-  --sidebar-primary: 240 5.9% 10%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 240 4.8% 95.9%;
-  --sidebar-accent-foreground: 240 5.9% 10%;
-  --sidebar-border: 220 13% 91%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
+  --sidebar-background: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
   --sidebar-width: 16rem;
   --sidebar-width-icon: 3rem;
   --sidebar-width-mobile: 18rem;
 }
 </style>
-
