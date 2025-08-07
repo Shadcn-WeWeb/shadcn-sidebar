@@ -56,7 +56,7 @@
 
 <script>
 export default {
-    name: 'ShadcnSidebarSection',
+    name: 'ShadcnSidebarElement',
     props: {
         content: { type: Object, required: true },
         wwElementState: { type: Object, required: true },
