@@ -627,8 +627,21 @@ export default {
 }
 </style>
 
-<!-- Import globals.css pour variables CSS Shadcn -->
+<!-- Variables CSS Shadcn UI intégrées directement -->
 <style>
-@import './globals.css';
+:root {
+  /* Sidebar specific variables */
+  --sidebar-background: 0 0% 98%;
+  --sidebar-foreground: 240 5.3% 26.1%;
+  --sidebar-primary: 240 5.9% 10%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 240 4.8% 95.9%;
+  --sidebar-accent-foreground: 240 5.9% 10%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+  --sidebar-width: 16rem;
+  --sidebar-width-icon: 3rem;
+  --sidebar-width-mobile: 18rem;
+}
 </style>
 
