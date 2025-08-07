@@ -1,5 +1,5 @@
 <template>
-    <wwLayout path="sidebarContent" class="sidebar-section-base"></wwLayout>
+    <wwLayout path="wwObjects" class="sidebar-section-base"></wwLayout>
 </template>
 
 <script>

@@ -7,13 +7,9 @@ export default {
         icon: 'menu'
     },
     properties: {
-        sidebarContent: {
-            defaultValue: [
-                {
-                    isWwObject: true,
-                    type: "ww-flexbox",
-                }
-            ],
+        wwObjects: {
+            hidden: true,
+            defaultValue: [],
         },
     }
 };
