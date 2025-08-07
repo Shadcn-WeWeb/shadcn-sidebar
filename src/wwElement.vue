@@ -259,7 +259,7 @@ export default {
                 event: { 
                     open: currentOpen,
                     openMobile: this.openMobile,
-                    state: this.sidebarState,
+                    state: this.state,
                     isMobile: this.isMobile,
                     collapsible: this.collapsibleType
                 }
@@ -341,7 +341,6 @@ export default {
             return icons[iconName] || icons.home;
         }
     }
-};
 };
 </script>
 
